@@ -19,6 +19,15 @@ public class SudokuSolver {
     public SudokuSolver(){
         cuadricula = new int[MAXIMO][MAXIMO];
     }
+
+    /**
+     * Constructor para pruebas
+     * @param cuadricula: arreglo de 9 x 9 con el problema del sudoku. Todas las
+     * casillas vacias deben estar llenas con ceros.
+     */
+    public SudokuSolver(int[][] cuadricula) {
+        this.cuadricula = cuadricula;
+    }
     
     /**
      * Metodo para agregar los valores a cuadricula para los cuales se quiere
@@ -69,9 +78,9 @@ public class SudokuSolver {
             }
         }
         else
-            return verificaRenglones(row, column + 1, conjunto, MAXIMO);            
+            return verificaRenglones(row, column + 1, conjunto, MAXIMO); 
     }
-    
+
     /**
      * Metodo recursivo que verifica que todas las columnas de cuadricula esten
      * en un formato valido para resolver el sudoku
@@ -104,7 +113,7 @@ public class SudokuSolver {
             }
         }
         else
-            return verificaColumnas(row + 1, column, conjunto, MAXIMO);    
+            return verificaColumnas(row + 1, column, conjunto, MAXIMO);
     }
     
     /**
@@ -159,10 +168,21 @@ public class SudokuSolver {
      * @see verificaRenglones, verificaColumnas, verificaCuadrados
      */
     public boolean verificaCuadricula(){
-        ConjuntoA<Integer> conjunto;
-        
-        conjunto = new ConjuntoA<>();
-        return verificaRenglones(0, 0, conjunto, MAXIMO) && verificaColumnas(0, 0, conjunto, MAXIMO) && verificaCuadrados(0, 0, conjunto, MAXIMO);
+//        ConjuntoA<Integer> conjunto;
+//        boolean valido;
+//        
+//        valido = false;
+//        conjunto = new ConjuntoA<>();
+//        if(verificaRenglones(0, 0, conjunto, MAXIMO)){
+//            conjunto = new ConjuntoA<>();
+//            if(verificaCuadrados(0, 0, conjunto, MAXIMO)){
+//                conjunto = new ConjuntoA<>();
+//                if(verificaColumnas(0, 0, conjunto, MAXIMO))
+//                    valido = true;
+//            }
+//        }
+            
+        return verificaRenglones(0, 0, new ConjuntoA<>(), MAXIMO) && verificaColumnas(0, 0, new ConjuntoA<>(), MAXIMO) && verificaCuadrados(0, 0, new ConjuntoA<>(), MAXIMO);
     }
     
     
