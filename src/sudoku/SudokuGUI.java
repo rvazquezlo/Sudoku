@@ -114,7 +114,7 @@ public class SudokuGUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Sudoku", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Verdana", 0, 18))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Sudoku", 2, 0, new java.awt.Font("Verdana", 0, 18))); // NOI18N
 
         jBLimpiar.setText("Limpiar");
         jBLimpiar.addActionListener(new java.awt.event.ActionListener() {
@@ -124,6 +124,11 @@ public class SudokuGUI extends javax.swing.JFrame {
         });
 
         jBResolver.setText("Resolver");
+        jBResolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBResolverActionPerformed(evt);
+            }
+        });
 
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" }));
         jComboBox3.addActionListener(new java.awt.event.ActionListener() {
@@ -1326,6 +1331,15 @@ public class SudokuGUI extends javax.swing.JFrame {
     private void jComboBox88ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox88ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox88ActionPerformed
+
+    private void jBResolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBResolverActionPerformed
+        SudokuSolver sudoku;
+        int i;
+        final int MAXIMO = 9; //maximo de renglones, columnas y cuadrados
+        
+        sudoku = new SudokuSolver();
+        for(i = 0; i < MAXIMO; )
+    }//GEN-LAST:event_jBResolverActionPerformed
 
     /**
      * @param args the command line arguments
