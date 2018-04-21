@@ -1338,7 +1338,10 @@ public class SudokuGUI extends javax.swing.JFrame {
         final int MAXIMO = 9; //maximo de renglones, columnas y cuadrados
         
         sudoku = new SudokuSolver();
-        sudoku.add(0, 0, j);
+        int x;
+        String y;
+        x = jCB00.getSelectedItem();
+        sudoku.add(0, 0, jCB00.getSelectedItem());
     }//GEN-LAST:event_jBResolverActionPerformed
 
     /**
