@@ -67,6 +67,7 @@ public class SudokuSolver {
         
         numero = cuadricula[row][column];
         if(numero != 0){
+            posicionesUsuario[row][column] = 1;
             if(!conjunto.add(numero))
                 return false; 
         }
@@ -169,28 +170,80 @@ public class SudokuSolver {
      * @see verificaRenglones, verificaColumnas, verificaCuadrados
      */
     public boolean verificaCuadricula(){
-//        ConjuntoA<Integer> conjunto;
-//        boolean valido;
-//        
-//        valido = false;
-//        conjunto = new ConjuntoA<>();
-//        if(verificaRenglones(0, 0, conjunto, MAXIMO)){
-//            conjunto = new ConjuntoA<>();
-//            if(verificaCuadrados(0, 0, conjunto, MAXIMO)){
-//                conjunto = new ConjuntoA<>();
-//                if(verificaColumnas(0, 0, conjunto, MAXIMO))
-//                    valido = true;
-//            }
-//        }
-            
         return verificaRenglones(0, 0, new ConjuntoA<>(), MAXIMO) && verificaColumnas(0, 0, new ConjuntoA<>(), MAXIMO) && verificaCuadrados(0, 0, new ConjuntoA<>(), MAXIMO);
     }
     
     public int[][] resuelve(){
-        resuelve()
+        resuelve(0, 0, 0, 1);
     }
     
-    private void resuelve(int renglon, int columna, int cuadrado, int numero){
+    private void numeroIgualAMaximo(int renglon, int columna, int numero){
+        if(columna == 0){
+            if(cuadricula[renglon - 1][MAXIMO - 1] != 9){
+                if(posicionValida(renglon - 1, MAXIMO - 1)){
+                    
+                }
+            }
+        }
+    }
+    
+    private void hola(int renglon, int columna, int numero){
+        int numeroAnterior;
+        
+        if(posicionVacia()){
+            if(verificaRenglon() && verificaColumna() && verificaCuadrado()){
+                cuadricula[renglon][columna] = numero;
+                if(columna == MAXIMO - 1){//ESTAMOS EN LA ULTIMA COLUMNA
+                    if(renglon > MAXIMO - 1){//NO ESTEMOS EN EL ULTIMO RENGLON
+                        resuelve(renglon + 1, 0, 1);
+                    }
+                    //si estamos en el ultimo renglon, entonces ya quedo el sudoku
+                }
+                else{//Me voy al siguiente cuadrado y empiezo a intentar
+                    resuelve(renglon, columna + 1, 1);
+                }
+            }
+            else{
+                if(numero == MAXIMO){//entonces te regresas al cuadrado de antes a intentar mas numeros
+                    if(columna == 0){//El cuadro de antes esta en el renglon anterior
+                        numeroAnterior = cuadricula[renglon - 1][8];
+                        if(posicionVacia(renglon - 1, 8)){//El usuario no dio nada ahi
+                            cuadricula[renglon - 1][8] = 0;
+                        }
+                        if(numeroAnterior < 9){
+                            resuelve(renglon - 1, 8, numeroAnterior + 1);
+                        }
+                        else{
+                            numeroAnterior = cuadricula[renglon - 1][7];
+                        }
+                            
+                        
+                    }
+                    else{
+                        resuelve(renglon, columna - 1, cuadricula[renglon][columna] + 1);
+                    }
+                }
+                else{//en el mismo cuadrado checas mas numeros 
+                    resuelve(renglon, columna, numero + 1);
+                }
+                
+            }        
+        }
+        else{//En esa casilla hay un numero que dio el usuario
+            if(columna == MAXIMO - 1){//ESTAMOS EN LA ULTIMA COLUMNA
+                if(renglon > MAXIMO - 1){//NO ESTEMOS EN EL ULTIMO RENGLON
+                    resuelve(renglon + 1, 0, 1);
+                }
+                //si estamos en el ultimo renglon, entonces ya quedo el sudoku
+            }
+            else{
+                resuelve(renglon, columna + 1, 1);
+            }
+        }
+        
+    }
+    
+    private void resuelve(int renglon, int columna,  int numero){
         
         if(numero == 10){
             if(columna == 0){
@@ -200,22 +253,22 @@ public class SudokuSolver {
                 resuelve(renglon, columna - 1, cuadrado, cuadricula[renglon][columna] + 1);  
         }
         if(posicionVacia()){//en la casilla no hay un numero que dio el usuario
-            if(verificaRenglon()){
+            if(verificaRenglon() && verificaColumna() && verificaCuadrado()){
                 if(verificaColumna()){
                     if(verificaCuadrado()){//si todos son validos y el numero es valido, se guarda en cuadricula y se pasa al siguiente
                         cuadricula[renglon][columna] = numero;
                         if(columna == MAXIMO - 1){//ESTAMOS EN LA ULTIMA COLUMNA
                             if(renglon > MAXIMO - 1){//NO ESTEMOS EN EL ULTIMO RENGLON
-                                resuelve(renglon + 1, 0, cuadrado, 0);
+                                resuelve(renglon + 1, 0, cuadrado, 1);
                             }
                             //si estamos en el ultimo renglon, entonces ya quedo el sudoku
                         }
                         else{
-                            resuelve(renglon, columna + 1, cuadrado, 0);
+                            resuelve(renglon, columna + 1, cuadrado, 1);
                         }
                     }
                     else{
-                        if(numero == 9){//entonces te regresas al cuadrado de antes a intentar mas numeros
+                        if(numero == MAXIMO){//entonces te regresas al cuadrado de antes a intentar mas numeros
                             if(columna == 0){//CHECAR QUE NO ESTEMOS EN EL PRIMER RENGLON
                                 resuelve(renglon - 1, 8, cuadrado, cuadricula[renglon - 1][8] + 1);
                             }
@@ -229,7 +282,7 @@ public class SudokuSolver {
                     }
                 }
                 else{//columna no valida
-                    if(numero == 9){//entonces te regresas al cuadrado de antes a intentar mas numeros
+                    if(numero == MAXIMO){//entonces te regresas al cuadrado de antes a intentar mas numeros
                         if(columna == 0){//CHECAR QUE NO ESTEMOS EN EL PRIMER RENGLON
                             resuelve(renglon - 1, 8, cuadrado, cuadricula[renglon - 1][8] + 1);
                         }
@@ -243,7 +296,7 @@ public class SudokuSolver {
                 }
             }
             else{
-                if(numero == 9){//entonces te regresas al cuadrado de antes a intentar mas numeros
+                if(numero == MAXIMO){//entonces te regresas al cuadrado de antes a intentar mas numeros
                     if(columna == 0){//CHECAR QUE NO ESTEMOS EN EL PRIMER RENGLON
                         resuelve(renglon - 1, 8, cuadrado, cuadricula[renglon - 1][8] + 1);
                     }
@@ -260,12 +313,12 @@ public class SudokuSolver {
         else{//En esa casilla hay un numero que dio el usuario
             if(columna == MAXIMO - 1){//ESTAMOS EN LA ULTIMA COLUMNA
                 if(renglon > MAXIMO - 1){//NO ESTEMOS EN EL ULTIMO RENGLON
-                    resuelve(renglon + 1, 0, cuadrado, 0);
+                    resuelve(renglon + 1, 0, cuadrado, 1);
                 }
                 //si estamos en el ultimo renglon, entonces ya quedo el sudoku
             }
             else{
-                resuelve(renglon, columna + 1, cuadrado, 0);
+                resuelve(renglon, columna + 1, cuadrado, 1);
             }
         }
     }

@@ -1332,6 +1332,25 @@ public class SudokuGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox88ActionPerformed
 
+    /**
+     * Determina si un String se puede convertir en int
+     * @param value: String a evaluar
+     * @return<ul>
+     * <li>0: si era una casilla que el usuario dejo vacia</li>
+     * <li>El numero que el usuario selecciono</li>
+     * </ul> 
+     */
+    public int dadoPorUsuario(String value) {
+        int numero;
+        
+        try {
+            numero = Integer.parseInt(value);
+        } catch (NumberFormatException e) {
+            numero = 0;
+        }
+        return numero;
+    }
+    
     private void jBResolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBResolverActionPerformed
         SudokuSolver sudoku;
         int i;
