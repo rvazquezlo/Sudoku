@@ -5,6 +5,8 @@
  */
 package sudoku;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Carlos
@@ -1353,8 +1355,11 @@ public class SudokuGUI extends javax.swing.JFrame {
     
     private void jBResolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBResolverActionPerformed
         SudokuSolver sudoku;
+        int [][] solucion;
+        
         sudoku = new SudokuSolver();
         
+        //Agregar toda la informacion dada por el usuario
         sudoku.add(0, 0, dadoPorUsuario((String)jCB00.getSelectedItem()));
         sudoku.add(0, 1, dadoPorUsuario((String)jCB01.getSelectedItem()));
         sudoku.add(0, 2, dadoPorUsuario((String)jCB02.getSelectedItem()));
@@ -1436,6 +1441,45 @@ public class SudokuGUI extends javax.swing.JFrame {
         sudoku.add(8, 6, dadoPorUsuario((String)jCB86.getSelectedItem()));
         sudoku.add(8, 7, dadoPorUsuario((String)jCB87.getSelectedItem()));
         sudoku.add(8, 8, dadoPorUsuario((String)jCB88.getSelectedItem()));
+        
+        //Verificar que sea valida la cuadricula
+        if(!sudoku.verificaCuadricula())
+            JOptionPane.showMessageDialog(null, "Sudoku invalido.\nNo se pueden"
+                    + " repetir los numeros en las filas, columnas ni regiones "
+                    + "de 3 x 3.\nPor favor presione \"Limpiar\" e intente de "
+                    + "nuevo.");
+        else{
+            solucion = sudoku.resuelve();
+            jCB00.setSelectedIndex(solucion[0][0]);
+            jCB01.setSelectedIndex(solucion[0][1]);
+            jCB02.setSelectedIndex(solucion[0][2]);
+            jCB03.setSelectedIndex(solucion[0][3]);
+            jCB04.setSelectedIndex(solucion[0][4]);
+            jCB05.setSelectedIndex(solucion[0][5]);
+            jCB06.setSelectedIndex(solucion[0][6]);
+            jCB07.setSelectedIndex(solucion[0][7]);
+            jCB08.setSelectedIndex(solucion[0][8]);
+            jCB10.setSelectedIndex(solucion[1][0]);
+            jCB11.setSelectedIndex(solucion[1][1]);
+            jCB12.setSelectedIndex(solucion[1][2]);
+            jCB13.setSelectedIndex(solucion[1][3]);
+            jCB14.setSelectedIndex(solucion[1][4]);
+            jCB15.setSelectedIndex(solucion[1][5]);
+            jCB16.setSelectedIndex(solucion[1][6]);
+            jCB17.setSelectedIndex(solucion[1][7]);
+            jCB18.setSelectedIndex(solucion[1][8]);
+            jCB20.setSelectedIndex(solucion[2][0]);
+            jCB21.setSelectedIndex(solucion[2][1]);
+            jCB22.setSelectedIndex(solucion[2][2]);
+            jCB23.setSelectedIndex(solucion[2][3]);
+            jCB24.setSelectedIndex(solucion[2][4]);
+            jCB25.setSelectedIndex(solucion[2][5]);
+            jCB26.setSelectedIndex(solucion[2][6]);
+            jCB27.setSelectedIndex(solucion[2][7]);
+            jCB28.setSelectedIndex(solucion[2][8]);
+            jCB30.setSelectedIndex(solucion[3][0]);
+            jCB31.setSelectedIndex(solucion[3][1]);
+        }
     }//GEN-LAST:event_jBResolverActionPerformed
 
     /**
