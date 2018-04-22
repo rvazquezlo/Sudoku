@@ -1333,7 +1333,7 @@ public class SudokuGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jCB56ActionPerformed
 
     /**
-     * Determina si un String se puede convertir en int
+     * Convierte una cadena en entero. Si la cadena esta vacia, pone un cero.
      * @param value: String a evaluar
      * @return<ul>
      * <li>0: si era una casilla que el usuario dejo vacia</li>

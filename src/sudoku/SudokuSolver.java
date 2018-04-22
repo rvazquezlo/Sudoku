@@ -59,7 +59,6 @@ public class SudokuSolver {
      * @param column: la columna de cuadricula que se esta analizando
      * @param conjunto: el conjunto en el que se meten los digitos del renglon 
      * que se esta analizando
-     * @param MAXIMO: el maximo numero de renglones y columnas 
      * @return <ul>
      * <li>true: Si todos los renglones tienen formato valido</li>
      * <li>false: Si algun renglon esta sobre-restringido</li>
@@ -67,7 +66,7 @@ public class SudokuSolver {
      * renglones</li>
      * </ul> 
      */
-    private boolean verificaRenglones(int row, int column, ConjuntoA<Integer> conjunto,  int MAXIMO){
+    private boolean verificaRenglones(int row, int column, ConjuntoA<Integer> conjunto){
         int numero;
         
         numero = cuadricula[row][column];
@@ -81,11 +80,11 @@ public class SudokuSolver {
                 return true;
             else{
                 conjunto = new ConjuntoA<>();
-                return verificaRenglones(row + 1, 0, conjunto, MAXIMO);
+                return verificaRenglones(row + 1, 0, conjunto);
             }
         }
         else
-            return verificaRenglones(row, column + 1, conjunto, MAXIMO); 
+            return verificaRenglones(row, column + 1, conjunto); 
     }
 
     /**
@@ -95,7 +94,6 @@ public class SudokuSolver {
      * @param column: la columna de cuadricula que se esta analizando
      * @param conjunto: el conjunto en el que se meten los digitos de la columna 
      * que se esta analizando
-     * @param MAXIMO: el maximo numero de renglones y columnas
      * @return <ul>
      * <li>true: Si todos las columnas tienen formato valido</li>
      * <li>false: Si alguna columna esta sobre-restringida</li>
@@ -103,7 +101,7 @@ public class SudokuSolver {
      * columnas</li>
      * </ul>  
      */
-    private boolean verificaColumnas(int row, int column, ConjuntoA<Integer> conjunto,  int MAXIMO){
+    private boolean verificaColumnas(int row, int column, ConjuntoA<Integer> conjunto){
         int numero;
         
         numero = cuadricula[row][column];
@@ -116,11 +114,11 @@ public class SudokuSolver {
                 return true;
             else{
                 conjunto = new ConjuntoA<>();
-                return verificaColumnas(0, column + 1, conjunto, MAXIMO);
+                return verificaColumnas(0, column + 1, conjunto);
             }
         }
         else
-            return verificaColumnas(row + 1, column, conjunto, MAXIMO);
+            return verificaColumnas(row + 1, column, conjunto);
     }
     
     /**
@@ -130,7 +128,6 @@ public class SudokuSolver {
      * @param column: la columna de cuadricula que se esta analizando
      * @param conjunto: el conjunto en el que se meten los digitos del cuadrado 
      * que se esta analizando
-     * @param MAXIMO: el maximo numero de renglones y columnas
      * @return <ul>
      * <li>true: Si todos los cuadrados tienen formato valido</li>
      * <li>false: Si algun cuadrado esta sobre-restringido</li>
@@ -138,7 +135,7 @@ public class SudokuSolver {
      * cuadrados</li>
      * </ul>  
      */
-    private boolean verificaCuadrados(int row, int column, ConjuntoA<Integer> conjunto,  int MAXIMO){
+    private boolean verificaCuadrados(int row, int column, ConjuntoA<Integer> conjunto){
         int numero;
         
         numero = cuadricula[row][column];
@@ -152,16 +149,16 @@ public class SudokuSolver {
             if((row + 1) % 3 == 0){//acabe un cuadrado
                 conjunto = new ConjuntoA<>();
                 if(column == MAXIMO - 1){//acabe los 3 cuadrados que estan en los mismos 3 renglones
-                    return verificaCuadrados(row + 1, 0, conjunto, MAXIMO);  
+                    return verificaCuadrados(row + 1, 0, conjunto);  
                 }
                 else
-                    return verificaCuadrados(row - 2, column + 1, conjunto, MAXIMO);  
+                    return verificaCuadrados(row - 2, column + 1, conjunto);  
             }
             else//acabe las 3 columnas de una fila de un cuadrado
-                return verificaCuadrados(row + 1, column - 2, conjunto, MAXIMO);       
+                return verificaCuadrados(row + 1, column - 2, conjunto);       
         }
         else{//sigo en el mismo renglon del mismo cuadrado
-            return verificaCuadrados(row, column + 1, conjunto, MAXIMO);
+            return verificaCuadrados(row, column + 1, conjunto);
         }
     }
     
@@ -175,7 +172,7 @@ public class SudokuSolver {
      * @see verificaRenglones, verificaColumnas, verificaCuadrados
      */
     public boolean verificaCuadricula(){
-        return verificaRenglones(0, 0, new ConjuntoA<>(), MAXIMO) && verificaColumnas(0, 0, new ConjuntoA<>(), MAXIMO) && verificaCuadrados(0, 0, new ConjuntoA<>(), MAXIMO);
+        return verificaRenglones(0, 0, new ConjuntoA<>()) && verificaColumnas(0, 0, new ConjuntoA<>()) && verificaCuadrados(0, 0, new ConjuntoA<>());
     }
     
     /**
