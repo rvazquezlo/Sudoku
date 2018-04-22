@@ -1353,14 +1353,89 @@ public class SudokuGUI extends javax.swing.JFrame {
     
     private void jBResolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBResolverActionPerformed
         SudokuSolver sudoku;
-        int i;
-        final int MAXIMO = 9; //maximo de renglones, columnas y cuadrados
-        
         sudoku = new SudokuSolver();
-        int x;
-        String y;
-        x = jCB00.getSelectedItem();
-        sudoku.add(0, 0, jCB00.getSelectedItem());
+        
+        sudoku.add(0, 0, dadoPorUsuario((String)jCB00.getSelectedItem()));
+        sudoku.add(0, 1, dadoPorUsuario((String)jCB01.getSelectedItem()));
+        sudoku.add(0, 2, dadoPorUsuario((String)jCB02.getSelectedItem()));
+        sudoku.add(0, 3, dadoPorUsuario((String)jCB03.getSelectedItem()));
+        sudoku.add(0, 4, dadoPorUsuario((String)jCB04.getSelectedItem()));
+        sudoku.add(0, 5, dadoPorUsuario((String)jCB05.getSelectedItem()));
+        sudoku.add(0, 6, dadoPorUsuario((String)jCB06.getSelectedItem()));
+        sudoku.add(0, 7, dadoPorUsuario((String)jCB07.getSelectedItem()));
+        sudoku.add(0, 8, dadoPorUsuario((String)jCB08.getSelectedItem()));
+        sudoku.add(1, 0, dadoPorUsuario((String)jCB10.getSelectedItem()));
+        sudoku.add(1, 1, dadoPorUsuario((String)jCB11.getSelectedItem()));
+        sudoku.add(1, 2, dadoPorUsuario((String)jCB12.getSelectedItem()));
+        sudoku.add(1, 3, dadoPorUsuario((String)jCB13.getSelectedItem()));
+        sudoku.add(1, 4, dadoPorUsuario((String)jCB14.getSelectedItem()));
+        sudoku.add(1, 5, dadoPorUsuario((String)jCB15.getSelectedItem()));
+        sudoku.add(1, 6, dadoPorUsuario((String)jCB16.getSelectedItem()));
+        sudoku.add(1, 7, dadoPorUsuario((String)jCB17.getSelectedItem()));
+        sudoku.add(1, 8, dadoPorUsuario((String)jCB18.getSelectedItem()));
+        sudoku.add(2, 0, dadoPorUsuario((String)jCB20.getSelectedItem()));
+        sudoku.add(2, 1, dadoPorUsuario((String)jCB21.getSelectedItem()));
+        sudoku.add(2, 2, dadoPorUsuario((String)jCB22.getSelectedItem()));
+        sudoku.add(2, 3, dadoPorUsuario((String)jCB23.getSelectedItem()));
+        sudoku.add(2, 4, dadoPorUsuario((String)jCB24.getSelectedItem()));
+        sudoku.add(2, 5, dadoPorUsuario((String)jCB25.getSelectedItem()));
+        sudoku.add(2, 6, dadoPorUsuario((String)jCB26.getSelectedItem()));
+        sudoku.add(2, 7, dadoPorUsuario((String)jCB27.getSelectedItem()));
+        sudoku.add(2, 8, dadoPorUsuario((String)jCB28.getSelectedItem()));
+        sudoku.add(3, 0, dadoPorUsuario((String)jCB30.getSelectedItem()));
+        sudoku.add(3, 1, dadoPorUsuario((String)jCB31.getSelectedItem()));
+        sudoku.add(3, 2, dadoPorUsuario((String)jCB32.getSelectedItem()));
+        sudoku.add(3, 3, dadoPorUsuario((String)jCB33.getSelectedItem()));
+        sudoku.add(3, 4, dadoPorUsuario((String)jCB34.getSelectedItem()));
+        sudoku.add(3, 5, dadoPorUsuario((String)jCB35.getSelectedItem()));
+        sudoku.add(3, 6, dadoPorUsuario((String)jCB36.getSelectedItem()));
+        sudoku.add(3, 7, dadoPorUsuario((String)jCB37.getSelectedItem()));
+        sudoku.add(3, 8, dadoPorUsuario((String)jCB38.getSelectedItem()));
+        sudoku.add(4, 0, dadoPorUsuario((String)jCB40.getSelectedItem()));
+        sudoku.add(4, 1, dadoPorUsuario((String)jCB41.getSelectedItem()));
+        sudoku.add(4, 2, dadoPorUsuario((String)jCB42.getSelectedItem()));
+        sudoku.add(4, 3, dadoPorUsuario((String)jCB43.getSelectedItem()));
+        sudoku.add(4, 4, dadoPorUsuario((String)jCB44.getSelectedItem()));
+        sudoku.add(4, 5, dadoPorUsuario((String)jCB45.getSelectedItem()));
+        sudoku.add(4, 6, dadoPorUsuario((String)jCB46.getSelectedItem()));
+        sudoku.add(4, 7, dadoPorUsuario((String)jCB47.getSelectedItem()));
+        sudoku.add(4, 8, dadoPorUsuario((String)jCB48.getSelectedItem()));
+        sudoku.add(5, 0, dadoPorUsuario((String)jCB50.getSelectedItem()));
+        sudoku.add(5, 1, dadoPorUsuario((String)jCB51.getSelectedItem()));
+        sudoku.add(5, 2, dadoPorUsuario((String)jCB52.getSelectedItem()));
+        sudoku.add(5, 3, dadoPorUsuario((String)jCB53.getSelectedItem()));
+        sudoku.add(5, 4, dadoPorUsuario((String)jCB54.getSelectedItem()));
+        sudoku.add(5, 5, dadoPorUsuario((String)jCB55.getSelectedItem()));
+        sudoku.add(5, 6, dadoPorUsuario((String)jCB56.getSelectedItem()));
+        sudoku.add(5, 7, dadoPorUsuario((String)jCB57.getSelectedItem()));
+        sudoku.add(5, 8, dadoPorUsuario((String)jCB58.getSelectedItem()));
+        sudoku.add(6, 0, dadoPorUsuario((String)jCB60.getSelectedItem()));
+        sudoku.add(6, 1, dadoPorUsuario((String)jCB61.getSelectedItem()));
+        sudoku.add(6, 2, dadoPorUsuario((String)jCB62.getSelectedItem()));
+        sudoku.add(6, 3, dadoPorUsuario((String)jCB63.getSelectedItem()));
+        sudoku.add(6, 4, dadoPorUsuario((String)jCB64.getSelectedItem()));
+        sudoku.add(6, 5, dadoPorUsuario((String)jCB65.getSelectedItem()));
+        sudoku.add(6, 6, dadoPorUsuario((String)jCB66.getSelectedItem()));
+        sudoku.add(6, 7, dadoPorUsuario((String)jCB67.getSelectedItem()));
+        sudoku.add(6, 8, dadoPorUsuario((String)jCB68.getSelectedItem()));
+        sudoku.add(7, 0, dadoPorUsuario((String)jCB70.getSelectedItem()));
+        sudoku.add(7, 1, dadoPorUsuario((String)jCB71.getSelectedItem()));
+        sudoku.add(7, 2, dadoPorUsuario((String)jCB72.getSelectedItem()));
+        sudoku.add(7, 3, dadoPorUsuario((String)jCB73.getSelectedItem()));
+        sudoku.add(7, 4, dadoPorUsuario((String)jCB74.getSelectedItem()));
+        sudoku.add(7, 5, dadoPorUsuario((String)jCB75.getSelectedItem()));
+        sudoku.add(7, 6, dadoPorUsuario((String)jCB76.getSelectedItem()));
+        sudoku.add(7, 7, dadoPorUsuario((String)jCB77.getSelectedItem()));
+        sudoku.add(7, 8, dadoPorUsuario((String)jCB78.getSelectedItem()));
+        sudoku.add(8, 0, dadoPorUsuario((String)jCB80.getSelectedItem()));
+        sudoku.add(8, 1, dadoPorUsuario((String)jCB81.getSelectedItem()));
+        sudoku.add(8, 2, dadoPorUsuario((String)jCB82.getSelectedItem()));
+        sudoku.add(8, 3, dadoPorUsuario((String)jCB83.getSelectedItem()));
+        sudoku.add(8, 4, dadoPorUsuario((String)jCB84.getSelectedItem()));
+        sudoku.add(8, 5, dadoPorUsuario((String)jCB85.getSelectedItem()));
+        sudoku.add(8, 6, dadoPorUsuario((String)jCB86.getSelectedItem()));
+        sudoku.add(8, 7, dadoPorUsuario((String)jCB87.getSelectedItem()));
+        sudoku.add(8, 8, dadoPorUsuario((String)jCB88.getSelectedItem()));
     }//GEN-LAST:event_jBResolverActionPerformed
 
     /**
