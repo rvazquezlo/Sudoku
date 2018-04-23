@@ -344,6 +344,63 @@ public class SudokuSolver {
         }  
     }
     
+    public  ArrayList validar(int [][] cuadricula){
+        ArrayList <Integer> resp= new ArrayList();
+        return validar(cuadricula,resp,0,0);
+    }
+    
+    private  ArrayList validar(int[][] cuadricula,ArrayList resp,int i,int j){
+        if(i==9){
+            return resp;
+        }
+        else{
+            if(j==9){
+                return validar(cuadricula,resp,i+1,0);
+            }
+            else{
+                if(cuadricula[i][j]!=0){
+                    resp.add(i);
+                    resp.add(j);
+                }
+                return validar(cuadricula,resp,i,j+1);
+            }
+        }   
+    }
+    
+    public  boolean numerosUsuario(int r, int c, int[][] posicionUsuario){
+        return posicionUsuario[r][c]==0;            
+    } //Si regresa true significa que el usuario puso un número ahí, false en el caso contrario.
+    
+    public  ConjuntoADT <Integer> crearconjuntoColumna(int c){
+        ConjuntoADT<Integer> columna= new ConjuntoA();
+        return crearconjuntoColumna(c,columna,0);
+    }
+    
+    private  ConjuntoADT <Integer> crearconjuntoColumna(int c, ConjuntoADT<Integer> columna, int r){
+        if(r==9)
+            return columna;
+        else{
+            columna.agrega(cuadricula[r][c]);
+            return crearconjuntoColumna(c,columna,r+1);
+        }
+            
+    }
+    
+    public  ConjuntoADT <Integer> crearconjuntoRenglon(int r){
+        ConjuntoADT<Integer> columna= new ConjuntoA();
+        return crearconjuntoColumna(r,columna,0);
+    }
+    
+    private  ConjuntoADT <Integer> crearconjuntoRenglon(int r, ConjuntoADT<Integer> columna, int c){
+        if(c==9)
+            return columna;
+        else{
+            columna.agrega(cuadricula[r][c]);
+            return crearconjuntoColumna(r,columna,c+1);
+        }
+            
+    }
+    
     /**
      * Metodo que resuelve el sudoku dado por el usuario con el apoyo del
      * metodo privado y recursivo, resuelve.
