@@ -332,6 +332,9 @@ public class SudokuSolver {
                 cuadricula[renglon][columna] = numero;
                 mueveAlSiguiente(renglon, columna);
             }
+            else if(numero < MAXIMO){
+                resuelve(renglon, columna, numero + 1);
+            }
             else{
                 if(columna == 0)
                     regresa(renglon - 1, MAXIMO);//, cuadricula[renglon - 1][MAXIMO - 1]);
