@@ -118,6 +118,11 @@ public class Sudoku {
         sudoku = new SudokuSolver(sudoku7);
         //imprime true
         System.out.println("7) " + sudoku.verificaCuadricula());
+        
+        //8) Prueba la creacion de conjuntos para columnas y renglones.
+        sudoku = new SudokuSolver(sudoku6);
+        //imprime el conjunto
+        System.out.println("8) " + sudoku.crearconjuntoColumna(3).toString());
     }
     
 }
