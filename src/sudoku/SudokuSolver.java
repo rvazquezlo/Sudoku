@@ -77,6 +77,8 @@ public class SudokuSolver {
             if(!conjunto.add(numero))
                 return false; 
         }
+        else
+            posicionesUsuario[row][column] = 0;
         if(column == MAXIMO - 1){
             if(row == MAXIMO - 1)
                 return true;
@@ -190,25 +192,25 @@ public class SudokuSolver {
     private void regresa(int renglon, int columna){
         int numeroAnterior;
         
-        if(numerosUsuario(renglon, columna)){//No lo dio el usuario
+        if(posicionesUsuario[renglon][columna] != 1){//No lo dio el usuario
             numeroAnterior = cuadricula[renglon][columna];
             cuadricula[renglon][columna] = 0;
             if(numeroAnterior < MAXIMO){
                 resuelve(renglon, columna, numeroAnterior + 1);
             }
             else if(columna == 0){
-                regresa(renglon - 1, MAXIMO);
+                regresa(renglon - 1, MAXIMO - 1);
             }
             else{
                 regresa(renglon, columna - 1);
             }
         }
         else if(columna == 0){
-                regresa(renglon - 1, MAXIMO);
-            }
+            regresa(renglon - 1, MAXIMO - 1);
+        }
         else{
-                regresa(renglon, columna - 1);
-            }
+            regresa(renglon, columna - 1);
+        }
     }
     
     /**
@@ -221,7 +223,7 @@ public class SudokuSolver {
      */
     private void mueveAlSiguiente(int renglon, int columna){
         if(columna == MAXIMO - 1){//ESTAMOS EN LA ULTIMA COLUMNA
-            if(renglon > MAXIMO - 1)//NO ESTEMOS EN EL ULTIMO RENGLON
+            if(renglon < MAXIMO - 1)//NO ESTEMOS EN EL ULTIMO RENGLON
                 resuelve(renglon + 1, 0, 1);
             //si estamos en el ultimo renglon, entonces ya quedo el sudoku
         }
@@ -285,8 +287,9 @@ public class SudokuSolver {
      * @see agregaCuadrado
      */
     private boolean verificaCuadrado(int renglon, int columna, int numero){
-        int renglonMax, columnaMax;
+        int renglonMax, columnaMax, numeroCuadricula;
         ConjuntoA<Integer> cuadro;
+        boolean respuesta;
         
         cuadro = new ConjuntoA<>();
         cuadro.add(numero);
@@ -312,45 +315,107 @@ public class SudokuSolver {
         else{
             columnaMax = 9;
         }
-        return agregaCuadrado(renglonMax - 3, columnaMax - 3, renglonMax, columnaMax, cuadro);    
+        
+        
+        renglon = renglonMax - 3;
+        respuesta = true;
+        
+        while(respuesta && renglon < renglonMax){
+            columna = columnaMax - 3;
+            while(respuesta && columna < columnaMax){
+                numeroCuadricula = cuadricula[renglon][columna];
+                if(numeroCuadricula != 0){
+                    respuesta = cuadro.add(numeroCuadricula);
+                }
+                columna = columna + 1;
+            }
+            renglon = renglon + 1;
+           
+        }
+        return respuesta;//
+    //return agregaCuadrado(renglonMax - 3, columnaMax - 3, renglonMax, columnaMax, cuadro);    
     }
     
     private  boolean creaConjuntoRenglon(int renglon, ConjuntoADT<Integer> conjuntoRenglon, int columna){
-        if(!conjuntoRenglon.add(cuadricula[renglon][columna]))
-            return false;
-        else if(columna == MAXIMO - 1)
+        int numero;
+        
+        numero = cuadricula[renglon][columna];
+        if(numero != 0){
+            if(!conjuntoRenglon.add(numero))
+                return false;
+        }
+        if(columna == MAXIMO - 1)
             return true;
         else
             return creaConjuntoRenglon(renglon, conjuntoRenglon, columna + 1);
     }
     
-    private  boolean verificaRenglon(int renglon, int numero){
-        ConjuntoA<Integer> conjuntoRenglon;
-        
-        conjuntoRenglon = new ConjuntoA();
-        conjuntoRenglon.add(numero);
-        return creaConjuntoRenglon(renglon, conjuntoRenglon, 0);
-    }
+//    private  boolean verificaRenglon(int renglon, int numero){
+//        ConjuntoA<Integer> conjuntoRenglon;
+//        
+//        conjuntoRenglon = new ConjuntoA();
+//        conjuntoRenglon.add(numero);
+//        return creaConjuntoRenglon(renglon, conjuntoRenglon, 0);
+//    }
     
     private  boolean creaConjuntoColumna(int columna, ConjuntoADT<Integer> conjuntoColumna, int renglon){
-        if(!conjuntoColumna.add(cuadricula[renglon][columna]))
-            return false;
-        else if(renglon == MAXIMO - 1)
+        int numero;
+        
+        numero = cuadricula[renglon][columna];
+        if(numero != 0){
+            if(!conjuntoColumna.add(numero))
+                return false;
+        }
+        if(renglon == MAXIMO - 1)
             return true;
         else
             return creaConjuntoColumna(columna, conjuntoColumna, renglon + 1);       
     }
     
-    public  boolean verificaColumna(int columna, int numero){
+//    public  boolean verificaColumna(int columna, int numero){
+//        ConjuntoA<Integer> conjuntoColumna;
+//        
+//        conjuntoColumna = new ConjuntoA();
+//        conjuntoColumna.add(numero);
+//        return creaConjuntoColumna(columna, conjuntoColumna, 0);
+//    }
+    
+    public boolean verificaColumna(int columna, int numero){
         ConjuntoA<Integer> conjuntoColumna;
+        boolean respuesta;
+        int renglon, numeroCuadricula;
         
         conjuntoColumna = new ConjuntoA();
         conjuntoColumna.add(numero);
-        return creaConjuntoColumna(columna, conjuntoColumna, 0);
+        respuesta = true;
+        renglon = 0;
+        while(respuesta && renglon < MAXIMO){
+            numeroCuadricula = cuadricula[renglon][columna];
+            if(numeroCuadricula != 0){
+                respuesta = conjuntoColumna.add(numeroCuadricula);
+            }
+            renglon++;
+        }
+        return respuesta;    
     }
     
-    public  boolean numerosUsuario(int renglon, int columna){
-        return posicionesUsuario[renglon][columna] != 1;            
+    public boolean verificaRenglon(int renglon, int numero){
+        ConjuntoA<Integer> conjuntoRenglon;
+        boolean respuesta;
+        int columna, numeroCuadricula;
+        
+        conjuntoRenglon = new ConjuntoA();
+        conjuntoRenglon.add(numero);
+        respuesta = true;
+        columna = 0;
+        while(respuesta && columna < MAXIMO){
+            numeroCuadricula = cuadricula[renglon][columna];
+            if(numeroCuadricula != 0){
+                respuesta = conjuntoRenglon.add(numeroCuadricula);
+            }
+            columna++;
+        }
+        return respuesta;    
     }
     
     /**
@@ -366,25 +431,61 @@ public class SudokuSolver {
      * @see posicionVacia, verificaRenglon, verificaColumna, verificaCuadrado, 
      * regresa, mueveAlSiguiente
      */
+////    private void resuelve(int renglon, int columna, int numero){
+////        if(posicionesUsuario[renglon][columna] != 1){
+////            if(verificaRenglon(renglon, numero) && verificaColumna(columna, numero) && verificaCuadrado(renglon, columna, numero)){
+////                cuadricula[renglon][columna] = numero;
+////                mueveAlSiguiente(renglon, columna);
+////            }
+////            else if(numero < MAXIMO){
+////                resuelve(renglon, columna, numero + 1);
+////            }
+////            else{
+////                if(columna == 0)
+////                    regresa(renglon - 1, MAXIMO - 1);//, cuadricula[renglon - 1][MAXIMO - 1]);
+////                else
+////                    regresa(renglon, columna - 1);//, cuadricula[renglon][columna - 1]);
+////            }        
+////        }
+////        else{//En esa casilla hay un numero que dio el usuario
+////            mueveAlSiguiente(renglon, columna);
+////        } 
+////    }
+    
+    /**
+     * Metodo recursivo, auxiliar del metodo publico resuelve. Encuentra una
+     * solucion para el sudoku utilizando un algoritmo de fuerza bruta. Cuando
+     * se encuentra, la agrega a cuadricula y pasa a la siguiente casilla. 
+     * Si despues se encuentra que la solucion es invalida, se borra de 
+     * cuadricula y se vuelve a intentar, regresando cuantas casillas sean 
+     * necesarias. 
+     * @param renglon: de la casilla para la cual se busca una solucion
+     * @param columna: de la casilla para cual se busca una solucion
+     * @param numero: entero del 1-9 que se va a intentar poner en la casilla
+     * @see posicionVacia, verificaRenglon, verificaColumna, verificaCuadrado, 
+     * regresa, mueveAlSiguiente
+     */
     private void resuelve(int renglon, int columna, int numero){
-        if(numerosUsuario(renglon, columna)){
+        if(posicionesUsuario[renglon][columna] != 1){
+            
             if(verificaRenglon(renglon, numero) && verificaColumna(columna, numero) && verificaCuadrado(renglon, columna, numero)){
                 cuadricula[renglon][columna] = numero;
                 mueveAlSiguiente(renglon, columna);
             }
+            
             else if(numero < MAXIMO){
                 resuelve(renglon, columna, numero + 1);
             }
             else{
                 if(columna == 0)
-                    regresa(renglon - 1, MAXIMO);//, cuadricula[renglon - 1][MAXIMO - 1]);
+                    regresa(renglon - 1, MAXIMO - 1);//, cuadricula[renglon - 1][MAXIMO - 1]);
                 else
                     regresa(renglon, columna - 1);//, cuadricula[renglon][columna - 1]);
             }        
         }
         else{//En esa casilla hay un numero que dio el usuario
             mueveAlSiguiente(renglon, columna);
-        }  
+        } 
     }
     
     /**
