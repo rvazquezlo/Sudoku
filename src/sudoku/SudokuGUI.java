@@ -1559,6 +1559,58 @@ public class SudokuGUI extends javax.swing.JFrame {
             jCB28.setSelectedIndex(solucion[2][8]);
             jCB30.setSelectedIndex(solucion[3][0]);
             jCB31.setSelectedIndex(solucion[3][1]);
+            jCB32.setSelectedIndex(solucion[3][2]);
+            jCB33.setSelectedIndex(solucion[3][3]);
+            jCB34.setSelectedIndex(solucion[3][4]);
+            jCB35.setSelectedIndex(solucion[3][5]);
+            jCB36.setSelectedIndex(solucion[3][6]);
+            jCB37.setSelectedIndex(solucion[3][7]);
+            jCB38.setSelectedIndex(solucion[3][8]);
+            jCB40.setSelectedIndex(solucion[4][0]);
+            jCB41.setSelectedIndex(solucion[4][1]);
+            jCB42.setSelectedIndex(solucion[4][2]);
+            jCB43.setSelectedIndex(solucion[4][3]);
+            jCB44.setSelectedIndex(solucion[4][4]);
+            jCB45.setSelectedIndex(solucion[4][5]);
+            jCB46.setSelectedIndex(solucion[4][6]);
+            jCB47.setSelectedIndex(solucion[4][7]);
+            jCB48.setSelectedIndex(solucion[4][8]);
+            jCB49.setSelectedIndex(solucion[5][0]);
+            jCB50.setSelectedIndex(solucion[5][1]);
+            jCB41.setSelectedIndex(solucion[5][2]);
+            jCB41.setSelectedIndex(solucion[5][3]);
+            jCB41.setSelectedIndex(solucion[5][4]);
+            jCB41.setSelectedIndex(solucion[5][5]);
+            jCB41.setSelectedIndex(solucion[5][6]);
+            jCB41.setSelectedIndex(solucion[5][7]);
+            jCB41.setSelectedIndex(solucion[5][8]);
+            jCB41.setSelectedIndex(solucion[6][0])
+            jCB41.setSelectedIndex(solucion[6][1])
+            jCB41.setSelectedIndex(solucion[6][2])
+            jCB41.setSelectedIndex(solucion[6][3])
+            jCB41.setSelectedIndex(solucion[6][4])
+            jCB41.setSelectedIndex(solucion[6][5])
+            jCB41.setSelectedIndex(solucion[6][6])
+            jCB41.setSelectedIndex(solucion[6][7])
+            jCB41.setSelectedIndex(solucion[6][8])
+            jCB41.setSelectedIndex(solucion[7][0])
+            jCB41.setSelectedIndex(solucion[7][1])
+            jCB41.setSelectedIndex(solucion[7][2])
+            jCB41.setSelectedIndex(solucion[7][3])    
+            jCB41.setSelectedIndex(solucion[7][4])    
+            jCB41.setSelectedIndex(solucion[7][5])   
+            jCB41.setSelectedIndex(solucion[7][6]) 
+            jCB41.setSelectedIndex(solucion[7][7])
+            jCB41.setSelectedIndex(solucion[7][8]) 
+            jCB41.setSelectedIndex(solucion[8][0]) 
+            jCB41.setSelectedIndex(solucion[8][1]) 
+            jCB41.setSelectedIndex(solucion[8][2]) 
+            jCB41.setSelectedIndex(solucion[8][3]) 
+            jCB41.setSelectedIndex(solucion[8][4]) 
+            jCB41.setSelectedIndex(solucion[8][5])
+            jCB41.setSelectedIndex(solucion[8][6])    
+            jCB41.setSelectedIndex(solucion[8][7])    
+            jCB41.setSelectedIndex(solucion[8][8])   
         }
     }//GEN-LAST:event_jBResolverActionPerformed
 
