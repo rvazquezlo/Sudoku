@@ -6,6 +6,8 @@
 package sudoku;
 
 import conjuntos.ConjuntoA;
+import conjuntos.ConjuntoADT;
+import java.util.ArrayList;
 
 /**
  *
@@ -188,7 +190,7 @@ public class SudokuSolver {
     private void regresa(int renglon, int columna){
         int numeroAnterior;
         
-        if(posicionVacia()){//No lo dio el usuario
+        if(numerosUsuario(renglon, columna)){//No lo dio el usuario
             numeroAnterior = cuadricula[renglon][columna];
             cuadricula[renglon][columna] = 0;
             if(numeroAnterior < MAXIMO){
@@ -313,6 +315,44 @@ public class SudokuSolver {
         return agregaCuadrado(renglonMax - 3, columnaMax - 3, renglonMax, columnaMax, cuadro);    
     }
     
+    private  boolean creaConjuntoRenglon(int renglon, ConjuntoADT<Integer> conjuntoRenglon, int columna){
+        if(!conjuntoRenglon.add(cuadricula[renglon][columna]))
+            return false;
+        else if(columna == MAXIMO - 1)
+            return true;
+        else
+            return creaConjuntoRenglon(renglon, conjuntoRenglon, columna + 1);
+    }
+    
+    private  boolean verificaRenglon(int renglon, int numero){
+        ConjuntoA<Integer> conjuntoRenglon;
+        
+        conjuntoRenglon = new ConjuntoA();
+        conjuntoRenglon.add(numero);
+        return creaConjuntoRenglon(renglon, conjuntoRenglon, 0);
+    }
+    
+    private  boolean creaConjuntoColumna(int columna, ConjuntoADT<Integer> conjuntoColumna, int renglon){
+        if(!conjuntoColumna.add(cuadricula[renglon][columna]))
+            return false;
+        else if(renglon == MAXIMO - 1)
+            return true;
+        else
+            return creaConjuntoColumna(columna, conjuntoColumna, renglon + 1);       
+    }
+    
+    public  boolean verificaColumna(int columna, int numero){
+        ConjuntoA<Integer> conjuntoColumna;
+        
+        conjuntoColumna = new ConjuntoA();
+        conjuntoColumna.add(numero);
+        return creaConjuntoColumna(columna, conjuntoColumna, 0);
+    }
+    
+    public  boolean numerosUsuario(int renglon, int columna){
+        return posicionesUsuario[renglon][columna] != 1;            
+    }
+    
     /**
      * Metodo recursivo, auxiliar del metodo publico resuelve. Encuentra una
      * solucion para el sudoku utilizando un algoritmo de fuerza bruta. Cuando
@@ -327,8 +367,8 @@ public class SudokuSolver {
      * regresa, mueveAlSiguiente
      */
     private void resuelve(int renglon, int columna, int numero){
-        if(posicionVacia()){
-            if(verificaRenglon() && verificaColumna() && verificaCuadrado(renglon, columna, numero)){
+        if(numerosUsuario(renglon, columna)){
+            if(verificaRenglon(renglon, numero) && verificaColumna(columna, numero) && verificaCuadrado(renglon, columna, numero)){
                 cuadricula[renglon][columna] = numero;
                 mueveAlSiguiente(renglon, columna);
             }
@@ -345,63 +385,6 @@ public class SudokuSolver {
         else{//En esa casilla hay un numero que dio el usuario
             mueveAlSiguiente(renglon, columna);
         }  
-    }
-    
-    public  ArrayList validar(int [][] cuadricula){
-        ArrayList <Integer> resp= new ArrayList();
-        return validar(cuadricula,resp,0,0);
-    }
-    
-    private  ArrayList validar(int[][] cuadricula,ArrayList resp,int i,int j){
-        if(i==9){
-            return resp;
-        }
-        else{
-            if(j==9){
-                return validar(cuadricula,resp,i+1,0);
-            }
-            else{
-                if(cuadricula[i][j]!=0){
-                    resp.add(i);
-                    resp.add(j);
-                }
-                return validar(cuadricula,resp,i,j+1);
-            }
-        }   
-    }
-    
-    public  boolean numerosUsuario(int r, int c, int[][] posicionUsuario){
-        return posicionUsuario[r][c]==0;            
-    } //Si regresa true significa que el usuario puso un número ahí, false en el caso contrario.
-    
-    public  ConjuntoADT <Integer> crearconjuntoColumna(int c){
-        ConjuntoADT<Integer> columna= new ConjuntoA();
-        return crearconjuntoColumna(c,columna,0);
-    }
-    
-    private  ConjuntoADT <Integer> crearconjuntoColumna(int c, ConjuntoADT<Integer> columna, int r){
-        if(r==9)
-            return columna;
-        else{
-            columna.agrega(cuadricula[r][c]);
-            return crearconjuntoColumna(c,columna,r+1);
-        }
-            
-    }
-    
-    public  ConjuntoADT <Integer> crearconjuntoRenglon(int r){
-        ConjuntoADT<Integer> columna= new ConjuntoA();
-        return crearconjuntoColumna(r,columna,0);
-    }
-    
-    private  ConjuntoADT <Integer> crearconjuntoRenglon(int r, ConjuntoADT<Integer> columna, int c){
-        if(c==9)
-            return columna;
-        else{
-            columna.agrega(cuadricula[r][c]);
-            return crearconjuntoColumna(r,columna,c+1);
-        }
-            
     }
     
     /**

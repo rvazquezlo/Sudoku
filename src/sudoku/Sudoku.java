@@ -122,7 +122,7 @@ public class Sudoku {
         //8) Prueba la creacion de conjuntos para columnas y renglones.
         sudoku = new SudokuSolver(sudoku6);
         //imprime el conjunto
-        System.out.println("8) " + sudoku.crearconjuntoColumna(3).toString());
+        //System.out.println("8) " + sudoku.crearconjuntoColumna(3).toString());
     }
     
 }
