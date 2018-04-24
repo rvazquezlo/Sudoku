@@ -1611,8 +1611,7 @@ public class SudokuGUI extends javax.swing.JFrame {
             jCB86.setSelectedIndex(solucion[8][6]);
             jCB87.setSelectedIndex(solucion[8][7]);
             jCB88.setSelectedIndex(solucion[8][8]);
-            
-            
+       
         }
     }//GEN-LAST:event_jBResolverActionPerformed
 
