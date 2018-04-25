@@ -18,6 +18,8 @@ public class SudokuSolver {
     
     private int[][] cuadricula;
     private final int MAXIMO = 9;//MAXIMO DE RENGLONES, FILAS Y COLUMNAS
+    private long incioDeSolucion;
+    private long tiempoMaximoSolucion;
     
     /**
      * Constructor normal. Se instancian los atributos de la clase como matrices
@@ -311,23 +313,29 @@ public class SudokuSolver {
     private boolean resuelve(int renglon, int columna){
         int numero, posiciones[];
         
-        if(renglon == MAXIMO)//Estado base
-            return true;
-        if(cuadricula[renglon][columna] != 0){
-            posiciones = mueveAlSiguiente(renglon, columna);
-            return resuelve(posiciones[0], posiciones[1]);
-        }
-        else{    
-            for(numero = 1; numero < MAXIMO + 1; numero++){
-                if(verificaRenglon(renglon, numero) && verificaColumna(columna, numero) && verificaCuadrado(renglon, columna, numero)){
-                    cuadricula[renglon][columna] = numero;//Guardar valor
-                    posiciones = mueveAlSiguiente(renglon, columna);
-                    if(resuelve(posiciones[0], posiciones[1]))//Mover a la siguiente casilla
-                        return true;//Se interrumpe el ciclo si queda
-                    cuadricula[renglon][columna] = 0;//La solucion que estaba no es valida. Se pone cero
-                }
+        try{
+            if(System.currentTimeMillis() > tiempoMaximoSolucion)//tiempo maximo para resolver
+                    return false;
+            if(renglon == MAXIMO)//Estado base
+                return true;
+            if(cuadricula[renglon][columna] != 0){
+                posiciones = mueveAlSiguiente(renglon, columna);
+                return resuelve(posiciones[0], posiciones[1]);
             }
-        return false;//Ningun numero del 1-9 sirve. Entonces regresa cambiar los de antes y vuelve a intentar   
+            else{    
+                for(numero = 1; numero < MAXIMO + 1; numero++){
+                    if(verificaRenglon(renglon, numero) && verificaColumna(columna, numero) && verificaCuadrado(renglon, columna, numero)){
+                        cuadricula[renglon][columna] = numero;//Guardar valor
+                        posiciones = mueveAlSiguiente(renglon, columna);
+                        if(resuelve(posiciones[0], posiciones[1]))//Mover a la siguiente casilla
+                            return true;//Se interrumpe el ciclo si queda
+                        cuadricula[renglon][columna] = 0;//La solucion que estaba no es valida. Se pone cero para evitar interferencia en los conjuntos
+                    }
+                }
+            return false;//Ningun numero del 1-9 sirve. Entonces regresa cambiar los de antes y vuelve a intentar   
+            }
+        }catch(NullPointerException e){
+            return false;
         }
     }
 
@@ -352,7 +360,10 @@ public class SudokuSolver {
      * @see resuelve
      */
     public int[][] resuelve(){
-        resuelve(0, 0);
+        incioDeSolucion = System.currentTimeMillis();
+        tiempoMaximoSolucion = incioDeSolucion + 3 * 1000;
+        if(!resuelve(0, 0))
+            cuadricula = null;
         return cuadricula;
     }
 }
