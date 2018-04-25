@@ -96,6 +96,7 @@ public class ConjuntoA<T> implements ConjuntoADT<T>{
         conjunto = nuevoConjunto;
     }
     
+    @Override
     public boolean add(T obj){
         boolean agrega;
         

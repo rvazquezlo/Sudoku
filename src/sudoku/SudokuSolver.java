@@ -196,7 +196,7 @@ public class SudokuSolver {
             numeroAnterior = cuadricula[renglon][columna];
             cuadricula[renglon][columna] = 0;
             if(numeroAnterior < MAXIMO){
-                resuelve(renglon, columna, numeroAnterior + 1);
+//                resuelve(renglon, columna, numeroAnterior + 1);
             }
             else if(columna == 0){
                 regresa(renglon - 1, MAXIMO - 1);
@@ -213,6 +213,37 @@ public class SudokuSolver {
         }
     }
     
+//     private int[] regresa(int renglon, int columna){
+//        int numeroAnterior, posiciones[];
+//        boolean casillaInvalida;
+//        
+//        casillaInvalida = true;
+//        numeroAnterior = cuadricula[renglon][columna];
+//        while(posicionesUsuario[renglon][columna] == 1 || numeroAnterior == 9 ){
+//            if(posicionesUsuario[renglon][columna] != 1){//No lo dio el usuario
+//                numeroAnterior = cuadricula[renglon][columna];
+//                cuadricula[renglon][columna] = 0;
+//            }
+//            if(numeroAnterior < 9){
+//                casillaInvalida = false;
+//            }
+//            else if(columna == 0){
+//                renglon = renglon - 1;
+//                columna = MAXIMO - 1;
+//                System.out.println(renglon+" "+columna);
+//            }
+//            else{
+//                columna = columna - 1;
+//                System.out.println(renglon+" "+columna);
+//            }
+//        }
+//        posiciones = new int[3];
+//        posiciones[0] = renglon;
+//        posiciones[1] = columna;
+//        posiciones[2] = numeroAnterior + 1;
+//        return posiciones;
+//    }
+    
     /**
      * Metodo auxiliar que se encarga de mandar la posicion de la siguiente 
      * casilla a ser examinada, junto con el valor que se va a probar al
@@ -221,16 +252,40 @@ public class SudokuSolver {
      * @param columna: de la casilla que se acaba de examinar
      * @see resuelve
      */
-    private void mueveAlSiguiente(int renglon, int columna){
-        if(columna == MAXIMO - 1){//ESTAMOS EN LA ULTIMA COLUMNA
-            if(renglon < MAXIMO - 1)//NO ESTEMOS EN EL ULTIMO RENGLON
-                resuelve(renglon + 1, 0, 1);
-            //si estamos en el ultimo renglon, entonces ya quedo el sudoku
-        }
-        else{//Me voy al siguiente cuadrado y empiezo a intentar
-            resuelve(renglon, columna + 1, 1);
-        }
-    }
+//    private void mueveAlSiguiente(int renglon, int columna){
+//        if(columna == MAXIMO - 1){//ESTAMOS EN LA ULTIMA COLUMNA
+//            if(renglon < MAXIMO - 1)//NO ESTEMOS EN EL ULTIMO RENGLON
+//                resuelve(renglon + 1, 0, 1);
+//            //si estamos en el ultimo renglon, entonces ya quedo el sudoku
+//        }
+//        else{//Me voy al siguiente cuadrado y empiezo a intentar
+//            resuelve(renglon, columna + 1, 1);
+//        }
+//    }
+    
+//    private int[] mueveAlSiguiente(int renglon, int columna){
+//        int[] posicion;
+//        
+//        posicion = new int[3];
+//        if(columna == MAXIMO - 1){//ESTAMOS EN LA ULTIMA COLUMNA
+//            if(renglon < MAXIMO - 1){//NO ESTEMOS EN EL ULTIMO RENGLON
+//                posicion[0] = renglon + 1;
+//                posicion[1] = 0;
+//                posicion[2] = 1;
+//                
+//            }
+//            else{
+//                posicion[0] = 10;
+//            } 
+//            //si estamos en el ultimo renglon, entonces ya quedo el sudoku
+//        }
+//        else{//Me voy al siguiente cuadrado y empiezo a intentar
+//            posicion[0] = renglon;
+//            posicion[1] = columna + 1;
+//            posicion[2] = 1;
+//        }
+//        return posicion;
+//    }
     
     /**
      * Metodo recursivo, auxiliar de verificaCuadrado. Agrega todos los 
@@ -417,76 +472,414 @@ public class SudokuSolver {
         }
         return respuesta;    
     }
-    
-    /**
-     * Metodo recursivo, auxiliar del metodo publico resuelve. Encuentra una
-     * solucion para el sudoku utilizando un algoritmo de fuerza bruta. Cuando
-     * se encuentra, la agrega a cuadricula y pasa a la siguiente casilla. 
-     * Si despues se encuentra que la solucion es invalida, se borra de 
-     * cuadricula y se vuelve a intentar, regresando cuantas casillas sean 
-     * necesarias. 
-     * @param renglon: de la casilla para la cual se busca una solucion
-     * @param columna: de la casilla para cual se busca una solucion
-     * @param numero: entero del 1-9 que se va a intentar poner en la casilla
-     * @see posicionVacia, verificaRenglon, verificaColumna, verificaCuadrado, 
-     * regresa, mueveAlSiguiente
-     */
-////    private void resuelve(int renglon, int columna, int numero){
-////        if(posicionesUsuario[renglon][columna] != 1){
-////            if(verificaRenglon(renglon, numero) && verificaColumna(columna, numero) && verificaCuadrado(renglon, columna, numero)){
-////                cuadricula[renglon][columna] = numero;
-////                mueveAlSiguiente(renglon, columna);
-////            }
-////            else if(numero < MAXIMO){
-////                resuelve(renglon, columna, numero + 1);
-////            }
-////            else{
-////                if(columna == 0)
-////                    regresa(renglon - 1, MAXIMO - 1);//, cuadricula[renglon - 1][MAXIMO - 1]);
-////                else
-////                    regresa(renglon, columna - 1);//, cuadricula[renglon][columna - 1]);
-////            }        
-////        }
-////        else{//En esa casilla hay un numero que dio el usuario
-////            mueveAlSiguiente(renglon, columna);
-////        } 
-////    }
-    
-    /**
-     * Metodo recursivo, auxiliar del metodo publico resuelve. Encuentra una
-     * solucion para el sudoku utilizando un algoritmo de fuerza bruta. Cuando
-     * se encuentra, la agrega a cuadricula y pasa a la siguiente casilla. 
-     * Si despues se encuentra que la solucion es invalida, se borra de 
-     * cuadricula y se vuelve a intentar, regresando cuantas casillas sean 
-     * necesarias. 
-     * @param renglon: de la casilla para la cual se busca una solucion
-     * @param columna: de la casilla para cual se busca una solucion
-     * @param numero: entero del 1-9 que se va a intentar poner en la casilla
-     * @see posicionVacia, verificaRenglon, verificaColumna, verificaCuadrado, 
-     * regresa, mueveAlSiguiente
-     */
-    private void resuelve(int renglon, int columna, int numero){
-        if(posicionesUsuario[renglon][columna] != 1){
+ 
+        private boolean resuelve(int renglon, int columna){
+        boolean valida;
+        int numero;
+        
+        if(renglon == MAXIMO - 1 && columna == MAXIMO - 1)
+            return true;
+        for(numero = 1; numero < MAXIMO + 1; numero++){
+                if(posicionesUsuario[renglon][columna] != 1){
+                if(verificaRenglon(renglon, numero) && verificaColumna(columna, numero) && verificaCuadrado(renglon, columna, numero)){
+                    cuadricula[renglon][columna] = numero;
+                    //move next
+                    if(columna == MAXIMO - 1){
+                        if(renglon < MAXIMO - 1){
+                            renglon = renglon + 1;
+                            columna = 0;
+                        }
+                        else{//Llegue al estado base
+                            renglon = 8;
+                        }       
+                    }
+                    else{//Todavia no llego a la ultima columna
+                        columna = columna + 1; 
+                        numero = 1;
+                    } 
+                    if(resuelve(renglon, columna))
+                        return true;
+                    cuadricula[renglon][columna] = 0;
+                }
+//                else{
+//                    if(numero < MAXIMO){//numero que intente no fue valido, entones intento sumarle uno mas
+//                        numero = numero + 1;
+//                    }
+//                    else{//me tengo que regresar a la casilla anterior
+//                        valida = false;
+//                        while(!valida){
+//                            if(columna == 0){
+//                                renglon = renglon - 1;
+//                                columna = MAXIMO - 1;
+//                            }
+//                            else{
+//                                columna = columna - 1;
+//                            }
+//                            if(posicionesUsuario[renglon][columna] != 1){
+//                                numero = cuadricula[renglon][columna];
+//                                cuadricula[renglon][columna] = 0;
+//                                if(numero < MAXIMO){//Esta casilla es valida para seguir intentando
+//                                    numero = numero + 1;
+//                                    valida = true;
+//                                }
+//                            }
+//
+//                        }//fin del while, ya me regrese
+
+                    }
+                }
+        return false;
+//            }
+//            else{
+//                if(columna == MAXIMO - 1){
+//                    if(renglon < MAXIMO - 1){
+//                        renglon = renglon + 1;
+//                        columna = 0;
+//                        numero = 1;
+//                    }
+//                    else{//Llegue al estado base
+//                        renglon = 9;
+//                    }       
+//                }
+//                else{//Todavia no llego a la ultima columna
+//                    columna = columna + 1; 
+//                    numero = 1;
+//                }     
+//            }
+//            System.out.println("Vuelta..." + renglon + " " + columna + " " + numero);
+//        }
             
-            if(verificaRenglon(renglon, numero) && verificaColumna(columna, numero) && verificaCuadrado(renglon, columna, numero)){
-                cuadricula[renglon][columna] = numero;
-                mueveAlSiguiente(renglon, columna);
-            }
-            
-            else if(numero < MAXIMO){
-                resuelve(renglon, columna, numero + 1);
-            }
-            else{
-                if(columna == 0)
-                    regresa(renglon - 1, MAXIMO - 1);//, cuadricula[renglon - 1][MAXIMO - 1]);
-                else
-                    regresa(renglon, columna - 1);//, cuadricula[renglon][columna - 1]);
-            }        
-        }
-        else{//En esa casilla hay un numero que dio el usuario
-            mueveAlSiguiente(renglon, columna);
-        } 
     }
+//    private void resuelve(int renglon, int columna, int numero){
+//        boolean valida;
+//        
+//        while(renglon < MAXIMO){
+//            if(posicionesUsuario[renglon][columna] != 1){
+//                if(verificaRenglon(renglon, numero) && verificaColumna(columna, numero) && verificaCuadrado(renglon, columna, numero)){
+//                    cuadricula[renglon][columna] = numero;
+//                    //move next
+//                    if(columna == MAXIMO - 1){
+//                        if(renglon < MAXIMO - 1){
+//                            renglon = renglon + 1;
+//                            columna = 0;
+//                            numero = 1;
+//                        }
+//                        else{//Llegue al estado base
+//                            renglon = 9;
+//                        }       
+//                    }
+//                    else{//Todavia no llego a la ultima columna
+//                        columna = columna + 1; 
+//                        numero = 1;
+//                    }      
+//                }
+//                else{
+//                    if(numero < MAXIMO){//numero que intente no fue valido, entones intento sumarle uno mas
+//                        numero = numero + 1;
+//                    }
+//                    else{//me tengo que regresar a la casilla anterior
+//                        valida = false;
+//                        while(!valida){
+//                            if(columna == 0){
+//                                renglon = renglon - 1;
+//                                columna = MAXIMO - 1;
+//                            }
+//                            else{
+//                                columna = columna - 1;
+//                            }
+//                            if(posicionesUsuario[renglon][columna] != 1){
+//                                numero = cuadricula[renglon][columna];
+//                                cuadricula[renglon][columna] = 0;
+//                                if(numero < MAXIMO){//Esta casilla es valida para seguir intentando
+//                                    numero = numero + 1;
+//                                    valida = true;
+//                                }
+//                            }
+//
+//                        }//fin del while, ya me regrese
+//
+//                    }
+//                }
+//            }
+//            else{
+//                if(columna == MAXIMO - 1){
+//                    if(renglon < MAXIMO - 1){
+//                        renglon = renglon + 1;
+//                        columna = 0;
+//                        numero = 1;
+//                    }
+//                    else{//Llegue al estado base
+//                        renglon = 9;
+//                    }       
+//                }
+//                else{//Todavia no llego a la ultima columna
+//                    columna = columna + 1; 
+//                    numero = 1;
+//                }     
+//            }
+//            System.out.println("Vuelta..." + renglon + " " + columna + " " + numero);
+//        }
+//    }
+//    private boolean resuelve(int renglon, int columna, int numero){
+//        boolean valida;
+//        
+//        for(; renglon < MAXIMO; renglon++){
+//            for(; columna < MAXIMO; columna++){
+//            if(posicionesUsuario[renglon][columna] != 1){
+//                if(verificaRenglon(renglon, numero) && verificaColumna(columna, numero) && verificaCuadrado(renglon, columna, numero)){
+//                    cuadricula[renglon][columna] = numero;
+//                    //move next
+//                    if(columna == MAXIMO - 1){
+//                        if(renglon < MAXIMO - 1){
+//                            renglon = renglon + 1;
+//                            resuelve(renglon + 1, 0, 1);
+//                        }
+//                        else{//Llegue al estado base
+//                            renglon = 9;
+//                        }       
+//                    }
+//                    else{//Todavia no llego a la ultima columna
+//                        columna = columna + 1; 
+//                        numero = 1;
+//                    }      
+//                }
+//                else{
+//                    if(numero < MAXIMO){//numero que intente no fue valido, entones intento sumarle uno mas
+//                        numero = numero + 1;
+//                    }
+//                    else{//me tengo que regresar a la casilla anterior
+//                        valida = false;
+//                        while(!valida){
+//                            if(columna == 0){
+//                                renglon = renglon - 1;
+//                                columna = MAXIMO - 1;
+//                            }
+//                            else{
+//                                columna = columna - 1;
+//                            }
+//                            if(posicionesUsuario[renglon][columna] != 1){
+//                                numero = cuadricula[renglon][columna];
+//                                cuadricula[renglon][columna] = 0;
+//                                if(numero < MAXIMO){//Esta casilla es valida para seguir intentando
+//                                    numero = numero + 1;
+//                                    valida = true;
+//                                }
+//                            }
+//
+//                        }//fin del while, ya me regrese
+//
+//                    }
+//                }
+//            }
+//            else{
+//                if(columna == MAXIMO - 1){
+//                    if(renglon < MAXIMO - 1){
+//                        renglon = renglon + 1;
+//                        columna = 0;
+//                        numero = 1;
+//                    }
+//                    else{//Llegue al estado base
+//                        renglon = 9;
+//                    }       
+//                }
+//                else{//Todavia no llego a la ultima columna
+//                    columna = columna + 1; 
+//                    numero = 1;
+//                }     
+//            }
+//            System.out.println("Vuelta..." + renglon + " " + columna + " " + numero);
+//        }
+//        }
+//    }
+    
+//    /**
+//     * Metodo recursivo, auxiliar del metodo publico resuelve. Encuentra una
+//     * solucion para el sudoku utilizando un algoritmo de fuerza bruta. Cuando
+//     * se encuentra, la agrega a cuadricula y pasa a la siguiente casilla. 
+//     * Si despues se encuentra que la solucion es invalida, se borra de 
+//     * cuadricula y se vuelve a intentar, regresando cuantas casillas sean 
+//     * necesarias. 
+//     * @param renglon: de la casilla para la cual se busca una solucion
+//     * @param columna: de la casilla para cual se busca una solucion
+//     * @param numero: entero del 1-9 que se va a intentar poner en la casilla
+//     * @see posicionVacia, verificaRenglon, verificaColumna, verificaCuadrado, 
+//     * regresa, mueveAlSiguiente
+//     */
+//    private void resuelve(int renglon, int columna, int numero){
+//        if(posicionesUsuario[renglon][columna] != 1){
+//            if(verificaRenglon(renglon, numero) && verificaColumna(columna, numero) && verificaCuadrado(renglon, columna, numero)){
+//                cuadricula[renglon][columna] = numero;
+//                mueveAlSiguiente(renglon, columna);
+//            }
+//            else if(numero < MAXIMO){
+//                resuelve(renglon, columna, numero + 1);
+//            }
+//            else{
+//                if(columna == 0)
+//                    regresa(renglon - 1, MAXIMO - 1);//, cuadricula[renglon - 1][MAXIMO - 1]);
+//                else
+//                    regresa(renglon, columna - 1);//, cuadricula[renglon][columna - 1]);
+//            }        
+//        }
+//        else{//En esa casilla hay un numero que dio el usuario
+//            mueveAlSiguiente(renglon, columna);
+//        } 
+//    }
+    
+//    private void resuelve(int renglon, int columna, int numero){
+//        boolean intentoFallido;
+//        
+//        intentoFallido = true;
+//        if(posicionesUsuario[renglon][columna] != 1){
+//            while(intentoFallido && numero < MAXIMO){
+//                if(verificaRenglon(renglon, numero) && verificaColumna(columna, numero) && verificaCuadrado(renglon, columna, numero)){
+//                       cuadricula[renglon][columna] = numero;
+//                       intentoFallido = false;
+//                }
+//                numero++;
+//            }
+//            if(!intentoFallido){
+//                mueveAlSiguiente(renglon, columna);
+//            }
+//            else{
+//                if(columna == 0)
+//                    regresa(renglon - 1, MAXIMO - 1);//, cuadricula[renglon - 1][MAXIMO - 1]);
+//                else
+//                    regresa(renglon, columna - 1);//, cuadricula[renglon][columna - 1]);
+//            }        
+//        }
+//        else
+//            mueveAlSiguiente(renglon, columna);
+//    }
+//    
+    
+//    private void resuelve(int renglon, int columna, int numero){
+//        boolean intentoFallido;
+//        
+//        intentoFallido = true;
+//        if(posicionesUsuario[renglon][columna] != 1){
+//            while(intentoFallido && numero < MAXIMO){
+//                if(verificaRenglon(renglon, numero) && verificaColumna(columna, numero) && verificaCuadrado(renglon, columna, numero)){
+//                       cuadricula[renglon][columna] = numero;
+//                       intentoFallido = false;
+//                }
+//                numero++;
+//            }
+//            if(!intentoFallido){
+//                mueveAlSiguiente(renglon, columna);
+//            }
+//            else{
+//                if(columna == 0)
+//                    regresa(renglon - 1, MAXIMO - 1);//, cuadricula[renglon - 1][MAXIMO - 1]);
+//                else
+//                    regresa(renglon, columna - 1);//, cuadricula[renglon][columna - 1]);
+//            }        
+//        }
+//        else{//En esa casilla hay un numero que dio el usuario
+//            mueveAlSiguiente(renglon, columna);
+//        } 
+//    }
+    
+    /**
+     * Metodo recursivo, auxiliar del metodo publico resuelve. Encuentra una
+     * solucion para el sudoku utilizando un algoritmo de fuerza bruta. Cuando
+     * se encuentra, la agrega a cuadricula y pasa a la siguiente casilla. 
+     * Si despues se encuentra que la solucion es invalida, se borra de 
+     * cuadricula y se vuelve a intentar, regresando cuantas casillas sean 
+     * necesarias. 
+     * @param renglon: de la casilla para la cual se busca una solucion
+     * @param columna: de la casilla para cual se busca una solucion
+     * @param numero: entero del 1-9 que se va a intentar poner en la casilla
+     * @see posicionVacia, verificaRenglon, verificaColumna, verificaCuadrado, 
+     * regresa, mueveAlSiguiente
+     */
+//    private void resuelve(int renglon, int columna, int numero){
+//        boolean intentoFallido, casillaInvalida;
+//        int numeroAnterior;
+//        
+//        intentoFallido = true;
+//        
+//        try{
+//        if(posicionesUsuario[renglon][columna] != 1){
+//            while(intentoFallido && numero < MAXIMO){
+//                if(verificaRenglon(renglon, numero) && verificaColumna(columna, numero) && verificaCuadrado(renglon, columna, numero)){
+//                       cuadricula[renglon][columna] = numero;
+//                       intentoFallido = false;
+//                }
+//                numero++;
+//            }
+//            if(!intentoFallido)//Me muevo a la siguiente casilla
+//            {
+//                if(columna == MAXIMO - 1){//ESTAMOS EN LA ULTIMA COLUMNA
+//            if(renglon == 0)//NO ESTEMOS EN EL ULTIMO RENGLON
+//                resuelve(renglon + 1, 0, 1);
+//            //si estamos en el ultimo renglon, entonces ya quedo el sudoku
+//        }
+//        else{//Me voy al siguiente cuadrado y empiezo a intentar
+//            resuelve(renglon, columna + 1, 1);
+//        }
+//            }
+//            
+//            else{//Me tengo que regresar
+//                casillaInvalida = true;
+//                numeroAnterior = 0;
+//                while(casillaInvalida){
+//                    if(columna == 0){
+//                        renglon = renglon - 1;
+//                        columna = MAXIMO - 1;    
+//                    }
+//                    else
+//                        columna = columna - 1;
+//                    if(posicionesUsuario[renglon][columna] != 1){
+//                        numeroAnterior = cuadricula[renglon][columna];
+//                        cuadricula[renglon][columna] = 0;
+//                        if(numeroAnterior < MAXIMO){
+//                            casillaInvalida = false;
+//                        }
+//                    }
+//                    System.out.println(" " + renglon + " " + columna);
+//                }
+//                System.out.println("Salida de while");
+//                resuelve(renglon, columna, numeroAnterior + 1);
+////                if(columna == 0){
+////                    regresa(renglon - 1, MAXIMO - 1);//, cuadricula[renglon - 1][MAXIMO - 1]);
+////                }
+////                else{
+////                    regresa(renglon, columna - 1);//, cuadricula[renglon][columna - 1]);
+////                }
+//            }        
+//        }
+//        else{//En esa casilla hay un numero que dio el usuario
+//            if(columna == MAXIMO - 1){//ESTAMOS EN LA ULTIMA COLUMNA
+//            if(renglon < MAXIMO - 1)//NO ESTEMOS EN EL ULTIMO RENGLON
+//                resuelve(renglon + 1, 0, 1);
+//            //si estamos en el ultimo renglon, entonces ya quedo el sudoku
+//        }
+//        else{//Me voy al siguiente cuadrado y empiezo a intentar
+//            resuelve(renglon, columna + 1, 1);
+//        }
+//        } 
+//        }catch(ArrayIndexOutOfBoundsException e){
+//            
+//        }
+//    }
+    
+//    private boolean resuelve(int renglon, int columna, int numero){
+//        boolean numeroValido, resuelto;
+//        
+//        resuelto = false;
+//        
+//        while(!resuelto){
+//            if(posicionesUsuario[renglon][columna] != 1){
+//                numeroValido = true;
+//                while(numero < MAXIMO){
+//                    
+//                }
+//            }
+//        }
+//        
+//        
+//    }
     
     /**
      * Metodo que resuelve el sudoku dado por el usuario con el apoyo del
@@ -495,7 +888,7 @@ public class SudokuSolver {
      * @see resuelve
      */
     public int[][] resuelve(){
-        resuelve(0, 0, 1);
+        resuelve(0, 0);
         return cuadricula;
     }
 }
