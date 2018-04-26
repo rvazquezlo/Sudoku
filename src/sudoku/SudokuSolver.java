@@ -284,7 +284,7 @@ public class SudokuSolver {
      * </li>
      * </ul> 
      */
-    public boolean verificaColumna(int columna, int numero){
+    private boolean verificaColumna(int columna, int numero){
         ConjuntoA<Integer> conjuntoColumna;
         boolean respuesta;
         int renglon, numeroCuadricula;
@@ -315,7 +315,7 @@ public class SudokuSolver {
      * </li>
      * </ul> 
      */
-    public boolean verificaRenglon(int renglon, int numero){
+    private boolean verificaRenglon(int renglon, int numero){
         ConjuntoA<Integer> conjuntoRenglon;
         boolean respuesta;
         int columna, numeroCuadricula;
@@ -384,7 +384,7 @@ public class SudokuSolver {
      */
     public int[][] resuelve(){
         incioDeSolucion = System.currentTimeMillis();
-        tiempoMaximoSolucion = incioDeSolucion + 3 * 1000;
+        tiempoMaximoSolucion = incioDeSolucion + 5 * 1000;
         if(!resuelve(0, 0))
             cuadricula = null;
         return cuadricula;
