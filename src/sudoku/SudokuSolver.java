@@ -1,7 +1,8 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Clase para resolver problemas de sudoku utilizando búsqueda exhaustiva con 
+ * retroceso. 
+ * La clase lleva el proceso desde verificar que la cuadricula sea valida hasta
+ * regresar una posible solucion.
  */
 package sudoku;
 
@@ -18,19 +19,18 @@ public class SudokuSolver {
     
     private int[][] cuadricula;
     private final int MAXIMO = 9;//MAXIMO DE RENGLONES, FILAS Y COLUMNAS
-    private long incioDeSolucion;
-    private long tiempoMaximoSolucion;
+    private long incioDeSolucion;//Tiempo
+    private long tiempoMaximoSolucion;//Tiempo
     
     /**
-     * Constructor normal. Se instancian los atributos de la clase como matrices
-     * de 9 x 9.
+     * Constructor normal. Se instancian una matriz de 9 x 9.
      */
     public SudokuSolver(){
         cuadricula = new int[MAXIMO][MAXIMO];
     }
 
     /**
-     * Constructor para pruebas de cuadricula
+     * Constructor para pruebas de cuadricula.
      * @param cuadricula: arreglo de 9 x 9 con el problema del sudoku. Todas las
      * casillas vacias deben estar llenas con ceros.
      */
@@ -176,15 +176,19 @@ public class SudokuSolver {
     public boolean verificaCuadricula(){
         return verificaRenglones(0, 0, new ConjuntoA<>()) && verificaColumnas(0, 0, new ConjuntoA<>()) && verificaCuadrados(0, 0, new ConjuntoA<>());
     }
-   
+    
     /**
-     * Metodo auxiliar que se encarga de mandar la posicion de la siguiente 
-     * casilla a ser examinada, junto con el valor que se va a probar al
-     * metodo privado resuelve.
+     * Metodo auxiliar de resuelve que se encarga de encontrar la siguiente 
+     * casilla en cuadricula basandose en la posicion marcada por renglon y 
+     * columna.
      * @param renglon: de la casilla que se acaba de examinar
      * @param columna: de la casilla que se acaba de examinar
-     * @see resuelve
-     */    
+     * @return: un arreglo de longitud dos. <ul>
+     * <li>En la posicion 0 se encuentra el renglon de la siguiente casilla. Si 
+     * en la posicion 0 hay un 9, ya no hay siguiente casilla. </li>
+     * <li>en la posicion 1 se encuentra la columna de la siguiente casilla</li>
+     * </ul> 
+     */
     private int[] mueveAlSiguiente(int renglon, int columna){
         int[] posicion;
         
@@ -207,19 +211,19 @@ public class SudokuSolver {
     
     /**
      * Metodo auxiliar que verifica que numero no este repetido dentro del 
-     * cuadrado perteneciente a la posicion indicada por renglon y columna. Para 
-     * hacerlo, determina el cuadrado de 3 x 3 perteneciente a la posicion
-     * marcada por renglon y columna y utiliza el metodo privado agregaCuadrado.
+     * cuadrado perteneciente a la posicion indicada por renglon y columna de
+     * cuadricula. Para hacerlo, determina el cuadrado de 3 x 3 perteneciente 
+     * a la posicion marcada por renglon y columna y agrega en un conjunto los 
+     * numeros de ese cuadrado y numero.
      * @param renglon: de la casilla en donde se intentara agregar a numero
      * @param columna: de la casilla en donde se intentara agregar a numero 
      * @param numero: entero del 1-9 que se va a intentar poner en la casilla
      * @return  <ul>
      * <li>true: Si el numero que se esta probando es valido en el cuadrado
      * de 3 x 3</li>
-     * <li>false: Si el numero que esta probando no es valido en el cuadrado de
-     * 3 x 3</li>
+     * <li>false: Si el numero que se esta probando no es valido en el cuadrado 
+     * de 3 x 3</li>
      * </ul>  
-     * @see agregaCuadrado
      */
     private boolean verificaCuadrado(int renglon, int columna, int numero){
         int renglonMax, columnaMax, numeroCuadricula;
@@ -250,6 +254,8 @@ public class SudokuSolver {
         else{
             columnaMax = 9;
         }
+        
+        //agregar numeros de cuadrado determinado
         renglon = renglonMax - 3;
         respuesta = true;
         while(respuesta && renglon < renglonMax){
@@ -266,6 +272,18 @@ public class SudokuSolver {
         return respuesta;  
     }
 
+    /**
+     * Metodo auxiliar que verifica que numero no este repetido dentro de 
+     * columna en cuadricula. Para  agrega en un conjunto los numeros de esa 
+     * columna y numero.
+     * @param columna: de la casilla en donde se intentara agregar a numero 
+     * @param numero: entero del 1-9 que se va a intentar poner en la casilla
+     * @return  <ul>
+     * <li>true: Si el numero que se esta probando es valido en la columna</li>
+     * <li>false: Si el numero que se esta probando no es valido en la columna
+     * </li>
+     * </ul> 
+     */
     public boolean verificaColumna(int columna, int numero){
         ConjuntoA<Integer> conjuntoColumna;
         boolean respuesta;
@@ -285,6 +303,18 @@ public class SudokuSolver {
         return respuesta;    
     }
     
+    /**
+     * Metodo auxiliar que verifica que numero no este repetido dentro de 
+     * renglon en cuadricula. Para  agrega en un conjunto los numeros de esa 
+     * renglon y numero.
+     * @param renglon: de la casilla en donde se intentara agregar a numero 
+     * @param numero: entero del 1-9 que se va a intentar poner en la casilla
+     * @return  <ul>
+     * <li>true: Si el numero que se esta probando es valido en el renglon</li>
+     * <li>false: Si el numero que se esta probando no es valido en el renglon
+     * </li>
+     * </ul> 
+     */
     public boolean verificaRenglon(int renglon, int numero){
         ConjuntoA<Integer> conjuntoRenglon;
         boolean respuesta;
@@ -305,53 +335,46 @@ public class SudokuSolver {
     }
    
     /**
-     * 
-     * @param renglon
-     * @param columna
-     * @return 
+     * Metodo auxiliar de resuelve() que utiliza búsqueda exhaustiva con 
+     * retroceso para encontrar una solucion para el sudoku.
+     * @param renglon: de la casilla de cuadricula para la cual se esta buscando 
+     * una solucion
+     * @param columna: de la casilla de cuadricula para la cual se esta buscando 
+     * una solucion
+     * @return <ul>
+     * <li>true: Si el sudoku tuvo solucion</li>
+     * <li>false: Si no se puso encontrar una solucion despues de 3 segundos
+     * </li>
+     * <li>Llamada recursiva: Cuando no se pudo hacer nada en esa casilla y se
+     * pasa a la siguiente</li>
+     * </ul> 
+     * @see: mueveAlSiguiente, verificaRenglon, verificaColumna, 
+     * verificaCuadrado 
      */
     private boolean resuelve(int renglon, int columna){
         int numero, posiciones[];
         
-        try{
-            if(System.currentTimeMillis() > tiempoMaximoSolucion)//tiempo maximo para resolver
-                    return false;
-            if(renglon == MAXIMO)//Estado base
-                return true;
-            if(cuadricula[renglon][columna] != 0){
-                posiciones = mueveAlSiguiente(renglon, columna);
-                return resuelve(posiciones[0], posiciones[1]);
-            }
-            else{    
-                for(numero = 1; numero < MAXIMO + 1; numero++){
-                    if(verificaRenglon(renglon, numero) && verificaColumna(columna, numero) && verificaCuadrado(renglon, columna, numero)){
-                        cuadricula[renglon][columna] = numero;//Guardar valor
-                        posiciones = mueveAlSiguiente(renglon, columna);
-                        if(resuelve(posiciones[0], posiciones[1]))//Mover a la siguiente casilla
-                            return true;//Se interrumpe el ciclo si queda
-                        cuadricula[renglon][columna] = 0;//La solucion que estaba no es valida. Se pone cero para evitar interferencia en los conjuntos
-                    }
+        if(System.currentTimeMillis() > tiempoMaximoSolucion)//tiempo maximo para resolver
+                return false;
+        if(renglon == MAXIMO)//Estado base
+            return true;
+        if(cuadricula[renglon][columna] != 0){
+            posiciones = mueveAlSiguiente(renglon, columna);
+            return resuelve(posiciones[0], posiciones[1]);
+        }
+        else{    
+            for(numero = 1; numero < MAXIMO + 1; numero++){
+                if(verificaRenglon(renglon, numero) && verificaColumna(columna, numero) && verificaCuadrado(renglon, columna, numero)){
+                    cuadricula[renglon][columna] = numero;//Guardar valor
+                    posiciones = mueveAlSiguiente(renglon, columna);
+                    if(resuelve(posiciones[0], posiciones[1]))//Mover a la siguiente casilla
+                        return true;
+                    cuadricula[renglon][columna] = 0;//La solucion que estaba no es valida. Se pone cero para evitar interferencia en los conjuntos
                 }
-            return false;//Ningun numero del 1-9 sirve. Entonces regresa cambiar los de antes y vuelve a intentar   
             }
-        }catch(NullPointerException e){
-            return false;
+        return false;//Ningun numero del 1-9 sirve. Entonces regresa cambiar los de antes y vuelve a intentar   
         }
     }
-
-//    /**
-//     * Metodo recursivo, auxiliar del metodo publico resuelve. Encuentra una
-//     * solucion para el sudoku utilizando un algoritmo de fuerza bruta. Cuando
-//     * se encuentra, la agrega a cuadricula y pasa a la siguiente casilla. 
-//     * Si despues se encuentra que la solucion es invalida, se borra de 
-//     * cuadricula y se vuelve a intentar con los numeros que aun no se
-//     * han intentado, regresando cuantas casillas sea  necesario. 
-//     * @param renglon: de la casilla para la cual se busca una solucion
-//     * @param columna: de la casilla para cual se busca una solucion
-//     * @param numero: entero del 1-9 que se va a intentar poner en la casilla
-//     * @see posicionVacia, verificaRenglon, verificaColumna, verificaCuadrado, 
-//     * regresa, mueveAlSiguiente
-//     */
 
     /**
      * Metodo que resuelve el sudoku dado por el usuario con el apoyo del
