@@ -9,7 +9,11 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author Carlos
+ * @author Shanti Sanchez Barbero
+ * @author Regina Vazquez Santa María López
+ * @author Regina Canalizo 
+ * @author Jerusa Chavero Gonzalez
+ * @author Damian Perez Landeros
  */
 public class SudokuGUI extends javax.swing.JFrame {
 
