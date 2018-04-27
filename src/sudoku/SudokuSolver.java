@@ -44,8 +44,7 @@ public class SudokuSolver {
      * @param renglon: al que se quiere agregar el valor, empezando desde 0
      * @param columna: a la que se quiere agregar el valor, empezando desde 0
      * @param valor: que se quiere agregar
-     * @throws ArrayIndexOutOfBoundsException: si se da un renglon o columna 
-     * mayor a 8 (solo hay nueve renglones y columnas)
+     * @throws ArrayIndexOutOfBoundsException
      */
     public void add(int renglon, int columna, int valor){
         try{
@@ -171,7 +170,9 @@ public class SudokuSolver {
      * <li>true: Si el sudoku tiene un formato valido</li>
      * <li>false: Si el sudoku esta sobre-restringido</li>
      * </ul>  
-     * @see verificaRenglones, verificaColumnas, verificaCuadrados
+     * @see verificaRenglones 
+     * @see verificaColumnas
+     * @see verificaCuadrados
      */
     public boolean verificaCuadricula(){
         return verificaRenglones(0, 0, new ConjuntoA<>()) && verificaColumnas(0, 0, new ConjuntoA<>()) && verificaCuadrados(0, 0, new ConjuntoA<>());
@@ -348,8 +349,10 @@ public class SudokuSolver {
      * <li>Llamada recursiva: Cuando no se pudo hacer nada en esa casilla y se
      * pasa a la siguiente</li>
      * </ul> 
-     * @see: mueveAlSiguiente, verificaRenglon, verificaColumna, 
-     * verificaCuadrado 
+     * @see: mueveAlSiguiente
+     * @see: verificaRenglon 
+     * @see: verificaColumna 
+     * @see: verificaCuadrado 
      */
     private boolean resuelve(int renglon, int columna){
         int numero, posiciones[];

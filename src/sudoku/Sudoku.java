@@ -16,7 +16,7 @@ package sudoku;
 public class Sudoku {
     
     /**
-     * Froma una cadena con todos los elementos de arreglo en orden
+     * Forma una cadena con todos los elementos de arreglo en orden
      * @param arreglo: del que se quiere formar la cadena
      * @return <ul>
      * <li> null: si arreglo es null o si tiene 0 columnas y/o renglones </li>
